@@ -7,13 +7,14 @@ class ProcessIndustries(ProcessJobs):
         super().__init__()
 
     def get_unique_industries(self) -> List[str]:
-        industries = set()
-        for job in self.jobs_list:
-            if job["industry"]:
-                industries.add(job["industry"])
-                return industries
+        unique_industries = set(
+            job["industry"] for job in self.jobs_list if job.get("industry")
+        )
+        return list(unique_industries)
 
 
-process = ProcessIndustries()
-process.read("data/jobs.csv")
-print(process.get_unique_industries())
+processInstance = ProcessIndustries()
+processInstance.read("tests/mocks/jobs_with_industries.csv")
+
+unique_industries = processInstance.get_unique_industries()
+print(unique_industries)
