@@ -12,3 +12,8 @@ class ProcessIndustries(ProcessJobs):
             if job["industry"]:
                 industries.add(job["industry"])
                 return industries
+
+
+process = ProcessIndustries()
+process.read("data/jobs.csv")
+print(process.get_unique_industries())

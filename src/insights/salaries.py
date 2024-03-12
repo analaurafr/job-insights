@@ -25,8 +25,3 @@ class ProcessSalaries(ProcessJobs):
         self, jobs: List[dict], salary: Union[str, int]
     ) -> List[Dict]:
         pass
-
-
-process = ProcessSalaries()
-process.read("data/jobs.csv")
-max_salary = process.get_max_salary()

@@ -33,12 +33,3 @@ class ProcessJobs:
                 filtered_jobs.append(job)
 
         return filtered_jobs
-
-
-process = ProcessJobs()
-process.read("data/jobs.csv")
-unique_job_types = process.get_unique_job_types()
-result = process.filter_by_multiple_criteria(
-    process.jobs_list,
-    {"industry": "Healthcare", "job_type": "PART_TIME"},
-)
