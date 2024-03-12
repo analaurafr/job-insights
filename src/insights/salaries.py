@@ -7,7 +7,13 @@ class ProcessSalaries(ProcessJobs):
         super().__init__()
 
     def get_max_salary(self) -> int:
-        pass
+        max_salaries = []
+        for job in self.jobs_list:
+            salary = job["max_salary"]
+            if salary.strip().isdigit():
+                max_salaries.append(int(salary))
+
+        return max(max_salaries)
 
     def get_min_salary(self) -> int:
         pass
@@ -19,3 +25,8 @@ class ProcessSalaries(ProcessJobs):
         self, jobs: List[dict], salary: Union[str, int]
     ) -> List[Dict]:
         pass
+
+
+process = ProcessSalaries()
+process.read("data/jobs.csv")
+max_salary = process.get_max_salary()
