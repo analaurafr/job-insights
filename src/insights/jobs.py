@@ -6,7 +6,7 @@ class ProcessJobs:
     def __init__(self) -> None:
         self.jobs_list = list()
 
-    def read(self, path) -> List[Dict]:
+    def read(self, path: str) -> List[Dict]:
         with open(path, encoding="utf-8") as file:
             read_data = csv.DictReader(file, delimiter=",")
             for row in read_data:
@@ -17,10 +17,28 @@ class ProcessJobs:
         unique_job_types = set(job["job_type"] for job in self.jobs_list)
         return list(unique_job_types)
 
-    def filter_by_multiple_criteria(self) -> List[dict]:
-        pass
+    def filter_by_multiple_criteria(
+        self, jobs: List[Dict], filter_criteria: Dict
+    ) -> List[Dict]:
+        filtered_jobs = []
+
+        if not isinstance(filter_criteria, dict):
+            raise TypeError
+
+        for job in jobs:
+            criteria_match = all(
+                job.get(key) == value for key, value in filter_criteria.items()
+            )
+            if criteria_match:
+                filtered_jobs.append(job)
+
+        return filtered_jobs
 
 
 process = ProcessJobs()
 process.read("data/jobs.csv")
 unique_job_types = process.get_unique_job_types()
+result = process.filter_by_multiple_criteria(
+    process.jobs_list,
+    {"industry": "Healthcare", "job_type": "PART_TIME"},
+)
